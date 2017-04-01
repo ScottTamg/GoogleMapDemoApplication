@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
