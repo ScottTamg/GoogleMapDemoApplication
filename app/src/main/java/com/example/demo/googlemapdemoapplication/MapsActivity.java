@@ -34,7 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int PERMISSION_CODE = 0x100001;
 
     private GoogleMap mMap;
-    private LocationManager mlocationManager;
+    private LocationManager mLocationManager;
     private boolean isMyLocation = false;
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mlocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
     }
@@ -78,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         } else {
             isMyLocation = true;
-            mlocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 10, MapsActivity.this);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 10, MapsActivity.this);
         }
     }
 
@@ -96,7 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "onPause 没有定位权限", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            mlocationManager.removeUpdates(MapsActivity.this);
+            mLocationManager.removeUpdates(MapsActivity.this);
         }
     }
 
@@ -181,7 +181,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        if (mlocationManager == null) {
+        if (mLocationManager == null) {
             isMyLocation = false;
             Toast.makeText(this, "没有定位", Toast.LENGTH_LONG).show();
         } else {
@@ -215,8 +215,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getCurrentLocation() {
-        boolean isGPSEnabled = mlocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean isNetworkEnabled = mlocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        boolean isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean isNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
         Location location = null;
         if (!(isGPSEnabled || isNetworkEnabled)) {
@@ -233,12 +233,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
-                mlocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10.0f, this);
-                location = mlocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10.0f, this);
+                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
             if (isGPSEnabled) {
-                mlocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10.0f, this);
-                location = mlocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10.0f, this);
+                location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             }
         }
 
